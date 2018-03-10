@@ -1,4 +1,4 @@
-package br.ufpb.sisalfa;
+package br.ufpb.dcx.sisalfa;
 
 /**
  * Represents a User that created a Challenge or Context.

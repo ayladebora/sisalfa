@@ -1,4 +1,4 @@
-package br.ufpb.sisalfa;
+package br.ufpb.dcx.sisalfa;
 
 /**
  * Represents a Challenge for exercises or games based on words.

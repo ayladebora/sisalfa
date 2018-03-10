@@ -1,4 +1,4 @@
-package br.ufpb.sisalfa;
+package br.ufpb.dcx.sisalfa;
 
 import java.util.List;
 

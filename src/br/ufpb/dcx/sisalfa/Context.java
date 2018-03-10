@@ -1,4 +1,4 @@
-package br.ufpb.sisalfa;
+package br.ufpb.dcx.sisalfa;
 
 /**
  * This class represents a set of related challenges.
