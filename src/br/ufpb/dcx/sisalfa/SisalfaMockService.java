@@ -15,6 +15,26 @@ public class SisalfaMockService implements SisalfaService{
 	private List<User> users;
 	private List<Challenge> challenges;
 	private List<Context> contexts;
+	private static int nextUserId = 0;
+	private static int nextChallengeId = 0;
+	private static int nextContextId = 0;
+	
+	//We are assuming no user defined ids start with CtxID, ChID or UsrID;
+	private synchronized static String getNextContextId() {
+		String id = "CtxID:"+nextContextId++;
+		return id;
+	}
+	
+	private synchronized static String getNextChallengeId() {
+		String id = "ChID:"+nextChallengeId++;
+		return id;
+	}
+	
+	private synchronized static String getNextUserId() {
+		String id = "UsrID:"+nextUserId++;
+		return id;
+	}
+	
 	
 	/**
 	 * Default constructor.
@@ -25,12 +45,15 @@ public class SisalfaMockService implements SisalfaService{
 		this.contexts = new ArrayList<Context>();
 	}
 	@Override
-	public boolean addContext(Context context) {
+	public String addContext(Context context) throws DataAlreadyExistsException {
 		if (this.contexts.contains(context)) {
-			return false;
+			throw new DataAlreadyExistsException();
 		} else {
+			if (context.getContextId().equals(Context.DEFAULT_CONTEXT_ID)) {
+				context.setContextId(getNextContextId());
+			}
 			this.contexts.add(context);
-			return true;
+			return context.getContextId();
 		}
 	}
 	@Override
@@ -57,45 +80,49 @@ public class SisalfaMockService implements SisalfaService{
 		return null;
 	}
 	@Override
-	public boolean updateContext(String idContext, Context context) {
+	public void updateContext(Context context) throws DataNotFoundException{
 		for (Context c: this.contexts) {
-			if (c.getContextId().equals(idContext) && context.getContextId().equals(idContext)) {
+			if (c.getContextId().equals(context.getContextId())) {
 				this.contexts.remove(c);
 				this.contexts.add(context);
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DataNotFoundException("Context not found. Id:"+context.getContextId());
 	}
 	@Override
-	public boolean deleteContext(String idContext) {
+	public void deleteContext(String idContext) throws DataNotFoundException{
 		for (Context c: this.contexts) {
 			if (c.getContextId().equals(idContext) ) {
 				this.contexts.remove(c);
+				return;
 			}
 		}
-		return false;
+		throw new DataNotFoundException("Context not found. Id:"+idContext);
 	}
 	
 	@Override
-	public boolean addChallenge(Challenge challenge) {
+	public String addChallenge(Challenge challenge) throws DataAlreadyExistsException{
 		if (this.challenges.contains(challenge)) {
-			return false;
+			throw new DataAlreadyExistsException("This challenge already exists. Id:"+challenge.getChallengeId());
 		} else {
+			if (challenge.getChallengeId().equals(Challenge.DEFAULT_CHALLENGE_ID)) {
+				challenge.setChallengeId(getNextChallengeId());
+			}
 			this.challenges.add(challenge);
-			return true;
+			return challenge.getChallengeId();
 		}
 	}
 	@Override
-	public boolean updateChallenge(String challengeId, Challenge newChallenge) {
+	public void updateChallenge(Challenge newChallenge) throws DataNotFoundException{
 		for (Challenge c: this.challenges) {
-			if (c.getChallengeId().equals(challengeId) && newChallenge.getChallengeId().equals(challengeId)) {
+			if (c.getChallengeId().equals(newChallenge.getChallengeId())) {
 				this.challenges.remove(c);
 				this.challenges.add(newChallenge);
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DataNotFoundException("Challenge not found. Id:"+newChallenge.getChallengeId());
 	}
 	@Override
 	public List<Challenge> getAllChallenges() {
@@ -112,13 +139,13 @@ public class SisalfaMockService implements SisalfaService{
 		return challengesOfUser;
 	}
 	@Override
-	public Challenge getChallenge(String idChallenge) {
+	public Challenge getChallenge(String idChallenge) throws DataNotFoundException{
 		for (Challenge c: this.challenges) {
 			if (c.getChallengeId().equals(idChallenge)) {
 				return c;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("Challenge not found. Id:"+idChallenge);
 	}
 	@Override
 	public List<Challenge> getChallengesByContext(String idContext) {
@@ -131,12 +158,15 @@ public class SisalfaMockService implements SisalfaService{
 		return challengesByContext;
 	}
 	@Override
-	public boolean addUser(User user) {
+	public String addUser(User user) throws DataAlreadyExistsException {
 		if (this.users.contains(user)) {
-			return false;
+			throw new DataAlreadyExistsException("User already exists. Id:"+user.getUserId());
 		} else {
+			if (user.getUserId().equals(User.DEFAULT_USER_ID)) {
+				user.setUserId(getNextUserId());
+			}
 			this.users.add(user);
-			return true;
+			return user.getUserId();
 		}
 		
 	}
@@ -145,47 +175,47 @@ public class SisalfaMockService implements SisalfaService{
 		return this.users;
 	}
 	@Override
-	public User getUser(String idUser) {
+	public User getUser(String idUser) throws DataNotFoundException{
 		for (User u: this.users) {
 			if (u.getUserId().equals(idUser)) {
 				return u;
 			}
 		}
-		return null;
+		throw new DataNotFoundException("User not found. Id:"+idUser);
 	}
 	
 	@Override
-	public boolean deleteChallenge(String idChallenge) {
+	public void deleteChallenge(String idChallenge) throws DataNotFoundException{
 		for (Challenge c: this.challenges) {
 			if (c.getChallengeId().equals(idChallenge)) {
 				this.challenges.remove(c);
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DataNotFoundException("Challenge not found. Id:"+idChallenge);
 	}
 	@Override
-	public boolean deleteUser(String idUser) {
+	public void deleteUser(String idUser) throws DataNotFoundException{
 		for (User u: this.users) {
 			if (u.getUserId().equals(idUser)) {
 				this.users.remove(u);
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DataNotFoundException("User not found. Id:"+idUser);
 	}
 	
 	@Override
-	public boolean updateUser(String idUser, User user) {
+	public void updateUser(User user) throws DataNotFoundException{
 		for (User u: this.users) {
-			if (u.getUserId().equals(idUser) && user.getUserId().equals(idUser)) {
+			if (u.getUserId().equals(user.getUserId())) {
 				this.users.remove(u);
 				this.users.add(user);
-				return true;
+				return;
 			}
 		}
-		return false;
-	}
+		throw new DataNotFoundException("User not found. Id:"+user.getUserId());
+}
 	
 
 

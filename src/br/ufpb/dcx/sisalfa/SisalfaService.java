@@ -1,5 +1,6 @@
 package br.ufpb.dcx.sisalfa;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -16,17 +17,24 @@ public interface SisalfaService {
 	 * 
 	 * @param context
 	 *            An object that represents a set of related challenges.
-	 * @return true if the Context was added and false, otherwise.
+	 * @return The id of the Context inserted.
+	 * 
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataAlreadyExistsException
+	 *             when the Context being added already exists.
 	 * 
 	 */
-	public boolean addContext(Context context);
+	public String addContext(Context context) throws RemoteException, DataAlreadyExistsException;
 
 	/**
 	 * Returns a list with all contexts.
 	 * 
 	 * @return a list with all contexts.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<Context> getAllContexts();
+	public List<Context> getAllContexts() throws RemoteException;
 
 	/**
 	 * Returns a list with all contexts created by a given user.
@@ -34,8 +42,10 @@ public interface SisalfaService {
 	 * @param idUser
 	 *            The id of the user.
 	 * @return a list with all contexts created by a user.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<Context> getAllContextsOfUser(String idUser);
+	public List<Context> getAllContextsOfUser(String idUser) throws RemoteException;
 
 	/**
 	 * Gets a given context.
@@ -43,73 +53,89 @@ public interface SisalfaService {
 	 * @param idContext
 	 *            The id of a Context.
 	 * @return The Context identified by a given id.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Context being searched is not found.
 	 */
-	public Context getContext(String idContext);
+	public Context getContext(String idContext) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Updates a given Context.
 	 * 
-	 * @param idContext
-	 *            The id of the Context to be updated.
 	 * @param context
 	 *            The Context with updated information.
-	 * @return true if there was a challenge with the given id and false, otherwise.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Context being updated is not found.
+	 * 
 	 */
-	public boolean updateContext(String idContext, Context context);
+	public void updateContext(Context context) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Deletes a certain Context.
 	 * 
 	 * @param idContext
 	 *            The id of the Context to be deleted.
-	 * @return true, if the Context was deleted and false, otherwise.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Context being deleted is not found.
 	 */
-	public boolean deleteContext(String idContext);
+	public void deleteContext(String idContext) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Inserts a new Challenge.
 	 * 
 	 * @param challenge
 	 *            The new Challenge to be inserted.
-	 * @return true if the Challenge was added and false, otherwise.
+	 * @return the id of the Challenge that was added.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataAlreadyExistsException
+	 *             when the Context being added already exists.
 	 * 
 	 */
-	public boolean addChallenge(Challenge challenge);
+	public String addChallenge(Challenge challenge) throws RemoteException, DataAlreadyExistsException;
 
 	/**
 	 * Updates a Challenge.
 	 * 
-	 * @param idChallenge
-	 *            The id of the Challenge to be updated.
 	 * @param newChallenge
 	 *            The Challenge with updated information.
-	 * @return true if there was a challenge with the given id and false, otherwise.
-	 * 
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Challenge being updated is not found.
 	 */
-	public boolean updateChallenge(String challengeId, Challenge newChallenge);
+	public void updateChallenge(Challenge newChallenge) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Returns a list with all the challenges.
 	 * 
 	 * @return a list with all the challenges.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<Challenge> getAllChallenges();
+	public List<Challenge> getAllChallenges() throws RemoteException;
 
 	/**
 	 * Returns a list with all the challenges of a given user.
 	 * 
 	 * @return a list with all the challenges created by a given user.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<Challenge> getAllChallengesOfUser(String idUser);
+	public List<Challenge> getAllChallengesOfUser(String idUser) throws RemoteException;
 
 	/**
 	 * Gets a given Challenge.
 	 * 
 	 * @param idChallenge
 	 *            The id of the Challenge to be obtained.
-	 * @return the Challenge found or null, if no challenge is found with that id.
+	 * @return the Challenge found.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Challenge being searched is not found.
 	 */
-	public Challenge getChallenge(String idChallenge);
+	public Challenge getChallenge(String idChallenge) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Gets the list of Challenges associated with a given context.
@@ -117,34 +143,45 @@ public interface SisalfaService {
 	 * @param idContext
 	 *            The Context id.
 	 * @return the list of Challenges associated with a given context.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<Challenge> getChallengesByContext(String idContext);
+	public List<Challenge> getChallengesByContext(String idContext) throws RemoteException;
 
 	/**
 	 * Deletes a certain Challenge.
 	 * 
 	 * @param idChallenge
 	 *            The id of the Challenge to be deleted.
-	 * @return true, if the Challenge was deleted and false, otherwise.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the Challenge being deleted is not found.
 	 */
-	public boolean deleteChallenge(String idChallenge);
+	public void deleteChallenge(String idChallenge) throws RemoteException, DataNotFoundException;
 
+	
 	/**
 	 * Inserts a new User.
 	 * 
 	 * @param user
 	 *            The new user.
-	 * @return true if the new user was added, and false, otherwise.
+	 * @return the id of the user that was added.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataAlreadyExistsException
+	 *             when the User being added already exists.
 	 * 
 	 */
-	public boolean addUser(User user);
+	public String addUser(User user) throws RemoteException, DataAlreadyExistsException;
 
 	/**
 	 * Gets the list of all users.
 	 * 
 	 * @return the list with all users.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
 	 */
-	public List<User> getAllUsers();
+	public List<User> getAllUsers() throws RemoteException;
 
 	/**
 	 * Gets a given user.
@@ -152,28 +189,33 @@ public interface SisalfaService {
 	 * @param idUser
 	 *            The id of a user.
 	 * @return The user found.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the user being searched is not found.
 	 */
-	public User getUser(String idUser);
+	public User getUser(String idUser) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Deletes a user with a given id.
 	 * 
 	 * @param idUser
 	 *            The id of a user.
-	 * @return true if the user was deleted, and false, otherwise.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the user being deleted is not found.
 	 */
-	public boolean deleteUser(String idUser);
+	public void deleteUser(String idUser) throws RemoteException, DataNotFoundException;
 
 	/**
 	 * Updates a user with a given id.
 	 * 
-	 * @param idUser
-	 *            The id of a user.
 	 * @param newUser
 	 *            The new user to replace the previews one with this id.
 	 * 
-	 * @return true if the user was updated, and false, otherwise.
+	 * @throws RemoteException if there is any communication problem with the
+	 *             service.
+	 * @throws DataNotFoundException when the user being updated is not found.
 	 */
-	public boolean updateUser(String idUser, User newUser);
+	public void updateUser(User newUser) throws RemoteException, DataNotFoundException;
 
 }
