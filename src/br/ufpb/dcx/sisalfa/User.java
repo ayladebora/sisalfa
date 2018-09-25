@@ -13,6 +13,7 @@ public class User {
 
 	private String name;
 	private String userId;
+	private String email;
 
 	/**
 	 * Constructor
@@ -21,10 +22,13 @@ public class User {
 	 *            The user name.
 	 * @param userId
 	 *            The user id.
+	 * @param email
+	 *            The user email.
 	 */
-	public User(String name, String userId) {
+	public User(String name, String userId, String email) {
 		this.name = name;
 		this.userId = userId;
+		this.setEmail(email);
 	}
 
 	/**
@@ -38,6 +42,20 @@ public class User {
 	public User() {
 		this.name = DEFAULT_USER_NAME;
 		this.userId = DEFAULT_USER_ID;
+		this.setEmail("");
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 *            The user name
+	 * 
+	 * @param email
+	 *            The user email
+	 */
+	public User(String name, String email) {
+		this(name, email, "");
 	}
 
 	/**
@@ -106,6 +124,26 @@ public class User {
 		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
+	}
+
+	/**
+	 * Gets the user email.
+	 * 
+	 * @return the user email.
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * Changes the user email
+	 * 
+	 * @param email
+	 *            The new email value.
+	 * 
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

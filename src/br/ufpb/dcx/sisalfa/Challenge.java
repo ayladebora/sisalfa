@@ -11,9 +11,9 @@ public class Challenge {
 	private String challengeId;
 	private String userId;
 	private String contextId;
-	private String sound;
+	private String soundUrl;
 	private String videoUrl;
-	private String image;
+	private String imageUrl;
 	public static final String DEFAULT_CHALLENGE_WORD = "Empty Challenge";
 	public static final String DEFAULT_CHALLENGE_ID = "-1";
 	
@@ -29,19 +29,19 @@ public class Challenge {
 	 * @param challengeId The id of this Challenge.
 	 * @param userId The id of the User that created this Challenge.
 	 * @param contextId The id of the Context related with this Challenge.
-	 * @param sound The sound representing this Challenge.
+	 * @param soundUrl The soundUrl representing this Challenge.
 	 * @param videoUrl The URL of a video representing this Challenge.
-	 * @param image The image representing this Challenge.
+	 * @param imageUrl The imageUrl representing this Challenge.
 	 */
-	public Challenge(String word, String challengeId, String userId, String contextId, String image, String sound, String videoUrl) {
+	public Challenge(String word, String challengeId, String userId, String contextId, String imageUrl, String soundUrl, String videoUrl) {
 		super();
 		this.word = word;
 		this.challengeId = challengeId;
 		this.userId = userId;
 		this.contextId = contextId;
-		this.sound = sound;
+		this.soundUrl = soundUrl;
 		this.videoUrl = videoUrl;
-		this.image = image;
+		this.imageUrl = imageUrl;
 	}
 	
 	/**
@@ -121,22 +121,22 @@ public class Challenge {
 	}
 
 	/**
-	 * Returns the sound for this Challenge.
+	 * Returns the soundUrl for this Challenge.
 	 * 
-	 * @return the sound for this Challenge.
+	 * @return the soundUrl for this Challenge.
 	 */
-	public String getSound() {
-		return sound;
+	public String getSoundUrl() {
+		return soundUrl;
 	}
 
 	/**
-	 * Changes the sound for this Challenge.
+	 * Changes the soundUrl for this Challenge.
 	 * 
-	 * @param sound
-	 *            the new sound for this Challenge.
+	 * @param soundUrl
+	 *            the new soundUrl for this Challenge.
 	 */
-	public void setSound(String sound) {
-		this.sound = sound;
+	public void setSoundUrl(String soundUrl) {
+		this.soundUrl = soundUrl;
 	}
 
 	/**
@@ -159,22 +159,22 @@ public class Challenge {
 	}
 
 	/**
-	 * Returns the image for this Challenge.
+	 * Returns the URL of a image  for this Challenge.
 	 * 
-	 * @return the image for this Challenge.
+	 * @return the URL of a image for this Challenge.
 	 */
-	public String getImage() {
-		return image;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	/**
-	 * Changes the image of this Challenge.
+	 * Changes the imageUrl of this Challenge.
 	 * 
-	 * @param image
-	 *            The new image for this Challenge.
+	 * @param imageUrl
+	 *            The new imageUrl for this Challenge.
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 
@@ -182,7 +182,7 @@ public class Challenge {
 	@Override
 	public String toString() {
 		return "Challenge [word=" + word + ", challengeId=" + challengeId + ", userId=" + userId + ", contextId="
-				+ contextId + ", sound=" + sound + ", videoUrl=" + videoUrl + ", image=" + image + "]";
+				+ contextId + ", soundUrl=" + soundUrl + ", videoUrl=" + videoUrl + ", imageUrl=" + imageUrl + "]";
 	}
 
 	@Override

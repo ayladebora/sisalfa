@@ -11,8 +11,8 @@ public class Context {
 	private String name;
 	private String contextId;
 	private String userId;
-	private String image;
-	private String sound;
+	private String imageUrl;
+	private String soundUrl;
 	private String videoUrl;
 	
 	public static final String DEFAULT_CONTEXT_NAME = "Empty Challenge";
@@ -31,12 +31,12 @@ public class Context {
 	 * @param sound The sound for this Context.
 	 * @param videoUrl The URL of a video for this Context.
 	 */
-	public Context(String name, String contextId, String userId, String image, String sound, String videoUrl) {
+	public Context(String name, String contextId, String userId, String imageUrl, String soundUrl, String videoUrl) {
 		this.name = name;
 		this.contextId = contextId;
 		this.userId = userId;
-		this.image = image;
-		this.sound = sound;
+		this.imageUrl = imageUrl;
+		this.soundUrl = soundUrl;
 		this.videoUrl = videoUrl;
 	}
 
@@ -102,8 +102,8 @@ public class Context {
 	 * 
 	 * @return a String representing the byte[] of a sound for this Context.
 	 */
-	public String getSound() {
-		return sound;
+	public String getSoundUrl() {
+		return soundUrl;
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class Context {
 	 * @param sound
 	 *            The sound of this Context, represented by a byte[].
 	 */
-	public void setSound(String sound) {
-		this.sound = sound;
+	public void setSoundUrl(String soundUrl) {
+		this.soundUrl = soundUrl;
 	}
 
 	/**
@@ -141,8 +141,8 @@ public class Context {
 	 * 
 	 * @return a String representing the byte[] of an image for this Context.
 	 */
-	public String getImage() {
-		return image;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 	/**
@@ -151,8 +151,8 @@ public class Context {
 	 * @param a
 	 *            String representing the byte[] of an image for this Context.
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 	@Override
@@ -182,7 +182,7 @@ public class Context {
 
 	@Override
 	public String toString() {
-		return "Context [name=" + name + ", contextId=" + contextId + ", userId=" + userId + ", image=" + image
-				+ ", sound=" + sound + ", videoUrl=" + videoUrl + "]";
+		return "Context [name=" + name + ", contextId=" + contextId + ", userId=" + userId + ", imageUrl=" + imageUrl
+				+ ", soundUrl=" + soundUrl + ", videoUrl=" + videoUrl + "]";
 	}
 }
